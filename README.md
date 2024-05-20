@@ -26,7 +26,7 @@ To use DiscoPubFetcher with Conda, you need to have Conda installed. Follow thes
 1. Create a new Conda environment:
 
     ```bash
-    conda create --previx  ./env_discopubfetcher python=3.12
+    conda create --prefix  ./env_discopubfetcher python=3.12
     ```
 
 2. Activate the new environment:

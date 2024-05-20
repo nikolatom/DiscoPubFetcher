@@ -5,6 +5,7 @@ import os
 import re
 import urllib.parse
 import shutil
+import tempfile
 
 # Helper functions
 def get_main_url(url):
@@ -98,23 +99,22 @@ def fetch_pdf(pmid, output_dir, unfetched_pmids, max_attempts=3):
 st.title('DiscoPubFetcher - automatic pdf download')
 uploaded_file = st.file_uploader("Upload a file with PMIDs (each PMID on a new line or separated by commas):", type=['txt'])
 pmid_input = st.text_input('Or enter PMID(s) manually (separated by commas):')
-output_dir = st.text_input('Output directory:', 'pubmed_down_results')
+results_file_name = st.text_input('Results folder name:', 'pubmed_down_results')
 max_attempts = st.number_input('Max retry attempts:', min_value=1, max_value=10, value=3, step=1)
 submit = st.button('Fetch Articles')
 
 def process_pmids(pmids):
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-    unfetched_pmids = []
-    for pmid in pmids:
-        fetch_pdf(pmid.strip(), output_dir, unfetched_pmids, max_attempts)
-    if unfetched_pmids:
-        with open(os.path.join(output_dir, 'unfetched_pmids.tsv'), 'w') as f:
-            for pmid in unfetched_pmids:
-                f.write(f"{pmid}\n")
-    shutil.make_archive(output_dir, 'zip', output_dir)
-    st.success('Processing complete!')
-    st.download_button('Download Results', data=open(f'{output_dir}.zip', 'rb').read(), file_name=f'{output_dir}.zip')
+    with tempfile.TemporaryDirectory() as temp_dir:
+        unfetched_pmids = []
+        for pmid in pmids:
+            fetch_pdf(pmid.strip(), temp_dir, unfetched_pmids, max_attempts)
+        if unfetched_pmids:
+            with open(os.path.join(temp_dir, 'unfetched_pmids.tsv'), 'w') as f:
+                for pmid in unfetched_pmids:
+                    f.write(f"{pmid}\n")
+        shutil.make_archive(temp_dir, 'zip', temp_dir)
+        st.success('Processing complete!')
+        st.download_button('Download Results', data=open(f'{temp_dir}.zip', 'rb').read(), file_name=f'{results_file_name}.zip')
 
 if submit:
     if uploaded_file is not None:

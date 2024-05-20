@@ -16,7 +16,7 @@ DiscoPubFetcher is an automated tool for downloading PDFs of scientific papers u
 To use DiscoPubFetcher with pip, you need to have Python installed. You can install the required packages using the following command:
 
 ```bash
-pip install streamlit requests beautifulsoup4
+pip install streamlit requests beautifulsoup4 lxml watchdog
 ```
 
 ### Using Conda

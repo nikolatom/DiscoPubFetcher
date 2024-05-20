@@ -38,7 +38,7 @@ To use DiscoPubFetcher with Conda, you need to have Conda installed. Follow thes
 3. Install the required packages:
 
     ```bash
-    conda install -c conda-forge streamlit requests beautifulsoup4
+    pip install streamlit requests beautifulsoup4
     ```
 
 ## Usage

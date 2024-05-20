@@ -38,7 +38,7 @@ To use DiscoPubFetcher with Conda, you need to have Conda installed. Follow thes
 3. Install the required packages:
 
     ```bash
-    pip install streamlit requests beautifulsoup4
+    pip install streamlit requests beautifulsoup4 lxml watchdog
     ```
 
 ## Usage
@@ -53,7 +53,7 @@ To use DiscoPubFetcher with Conda, you need to have Conda installed. Follow thes
 2. Run the Streamlit app:
 
     ```bash
-    streamlit run discopubfetcher.py
+    streamlit run app_streamlit.py
     ```
 
 3. Use the web interface to upload a file with PMIDs or enter PMIDs manually. Specify the output directory and the maximum number of retry attempts. Click the "Fetch Articles" button to start the process.
